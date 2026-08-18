@@ -21,6 +21,30 @@ VITE_API_KEY=wl_live_…
 
 Restart `npm run dev` after any `.env` change.
 
+Production `npm run build` uses committed `.env.production` (API URLs). Set `VITE_API_KEY` as a CI/hosting secret — do not commit it.
+
+## Deploy on Vercel
+
+1. Push this folder (or the parent repo) to GitHub.
+2. In [Vercel](https://vercel.com/new): **Add New → Project** → import the repo.
+3. Set **Root Directory** to `sports/SPAdaptorCustomerDemo` if the repo is the ClashDx monorepo. Leave it empty if this folder is its own repo.
+4. Framework Preset: **Vite**. Build `npm run build`, output `dist`.
+5. **Settings → Environment Variables** — add for Production (and Preview if needed):
+
+   | Name | Value |
+   |---|---|
+   | `VITE_API_KEY` | `wl_live_…` from admin create/rotate |
+
+   URLs come from `.env.production`. Do not put the key in git.
+6. Deploy. After changing env vars, **Redeploy** so Vite bakes them into the build.
+
+CLI from this folder (after `npx vercel login`):
+
+```bash
+npx vercel env add VITE_API_KEY production
+npx vercel --prod
+```
+
 ## Layout
 
 ```text
